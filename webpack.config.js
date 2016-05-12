@@ -1,5 +1,3 @@
-const webpack = require('webpack');
-
 module.exports = {
     entry: './main.js',
     output: {
@@ -10,7 +8,7 @@ module.exports = {
         port: 3333,
         inline: true,
         colors: true,
-        hot: true,
+        //hot: true,
         progress: true
     },
     module: {
@@ -19,7 +17,8 @@ module.exports = {
             exclude: /node_modules/,
             loader: 'babel',
             query: {
-                presets: ['es2015', 'react', 'react-hmre']
+                presets: ['es2015', 'react']
+                //presets: ['es2015', 'react', 'react-hmre']
             }
 
         }]
