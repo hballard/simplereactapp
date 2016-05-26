@@ -4,25 +4,41 @@ export default class App extends React.Component {
     constructor() {
         super();
         this.state = {
-            timeElapsed: 0
+            elapsedTime: 0,
+            buttonTitle: 'Start Timer'
         };
-        this.tick = this.tick.bind(this)
+        this.tick = this.tick.bind(this);
+        this.onClickHandler = this.onClickHandler.bind(this)
     }
 
     tick() {
-        this.setState({
-            timeElapsed: this.state.timeElapsed + 1
-        })
+        this.setState({elapsedTime: this.state.elapsedTime + 1})
     }
 
-    componentDidMount() {
-        this.interval = setInterval(this.tick, 1000)
+    onClickHandler() {
+        if (this.state.elapsedTime === 0) {
+            this.setState({
+                buttonTitle: 'Reset Timer'
+            });
+            this.interval = setInterval(this.tick, 100)
+        } else {
+            clearInterval(this.interval);
+            this.setState({
+                elapsedTime: 0,
+                buttonTitle: 'Start Timer'
+            })
+        }
     }
 
     render() {
-        return <div>
-            <div>{this.state.timeElapsed}</div>
-            <div>Hello World!</div>
-        </div>
+        return (
+            <div>
+                <div>{this.state.elapsedTime}</div>
+                <button
+                    onClick={this.onClickHandler}
+                    name="timer">{this.state.buttonTitle}
+                </button>
+            </div>
+        )
     }
 }
