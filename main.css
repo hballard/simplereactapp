@@ -1,0 +1,36 @@
+
+body {
+  background: #0b97c4;
+  font-size: 16px;
+  line-height: 2em;
+}
+
+#main-container {
+  margin: 4em auto;
+  max-width: 50em;
+  border: 5px solid #ccc;
+  padding: 1em 1em;
+  background: white;
+}
+
+#list-container {
+  padding-left: 1em;
+  height: 30em;
+  text-align: center;
+  padding-bottom: 20em;
+}
+
+.list-unstyled {
+  overflow-y: auto;
+  max-height: 20em;
+}
+
+.vertical-align {
+    float: right;
+}
+
+.active-item {
+  color: white;
+  background: #337ab7;
+}
+

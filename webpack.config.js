@@ -21,6 +21,9 @@ module.exports = {
                 //presets: ['es2015', 'react', 'react-hmre']
             }
 
+        },
+        {
+            test: /\.json$/, loader: 'json' 
         }]
     }
 };

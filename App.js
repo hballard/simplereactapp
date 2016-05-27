@@ -4,41 +4,75 @@ export default class App extends React.Component {
     constructor() {
         super();
         this.state = {
-            elapsedTime: 0,
-            buttonTitle: 'Start Timer'
-        };
-        this.tick = this.tick.bind(this);
-        this.onClickHandler = this.onClickHandler.bind(this)
-    }
-
-    tick() {
-        this.setState({elapsedTime: this.state.elapsedTime + 1})
-    }
-
-    onClickHandler() {
-        if (this.state.elapsedTime === 0) {
-            this.setState({
-                buttonTitle: 'Reset Timer'
-            });
-            this.interval = setInterval(this.tick, 100)
-        } else {
-            clearInterval(this.interval);
-            this.setState({
-                elapsedTime: 0,
-                buttonTitle: 'Start Timer'
-            })
+            activeItem: null
         }
     }
 
     render() {
-        return (
-            <div>
-                <div>{this.state.elapsedTime}</div>
-                <button
-                    onClick={this.onClickHandler}
-                    name="timer">{this.state.buttonTitle}
-                </button>
-            </div>
-        )
+        return <div id="main-container" className="container row">
+            <ContactDetail data={this.props.data} activeItem={this.state.activeItem}/>
+            <ContactList data={this.props.data} activeItem={this.state.activeItem}/>
+        </div>
+
     }
-}
+};
+
+export const ContactList = (props) => {
+    return <div
+        id="list-container"
+        className="col-lg-3 col-lg-offset-1 col-md-3 col-md-offset-1 col-sm-3 col-sm-offset-1 col-xs-12">
+        <div className="page-header"><h3><strong>Contacts</strong></h3></div>
+        <ul className='list-unstyled'>
+            {props.data.map((obj)=> {
+                return <li
+                    key={obj.id}>
+                    {obj.first_name}, {obj.last_name}
+                </li>
+            })}
+        </ul>
+    </div>
+};
+
+export const ContactDetail = (props) => {
+    return <div className="col-lg-6 col-lg-offset-1 col-md-6 col-md-offset-1 col-sm-6 col-sm-offset-2 col-xs-12">
+        <div className="page-header"><h3><strong>Contact Info</strong></h3></div>
+        <div>
+            <h1>
+                Heath Ballard
+            </h1>
+        </div>
+        <div>
+            <table className="table table-hover table-striped">
+                <tbody>
+                <tr>
+                    <td className='text-right'><strong>Company</strong></td>
+                    <td>Company</td>
+                </tr>
+                <tr>
+                    <td className='text-right'><strong>Job Title:</strong></td>
+                    <td>Job Title</td>
+                </tr>
+                <tr>
+                    <td className='text-right'><strong>Phone Number:</strong></td>
+                    <td>Phone Number</td>
+                </tr>
+                <tr>
+                    <td className='text-right'><strong>Email:</strong></td>
+                    <td>Email</td>
+                </tr>
+                <tr>
+                    <td className='text-right'><strong>Address:</strong></td>
+                    <td>Address
+                        <br/>
+                        City, State Zip
+                    </td>
+                </tr>
+                <tr>
+                    <td className='text-right'><strong>Comments:</strong></td>
+                    <td>Comments</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+};
