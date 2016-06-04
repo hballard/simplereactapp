@@ -1,5 +1,5 @@
 module.exports = {
-    entry: './main.js',
+    entry: './static/main.js',
     output: {
         path: './',
         filename: 'index.js'
@@ -23,7 +23,7 @@ module.exports = {
 
         },
         {
-            test: /\.json$/, loader: 'json' 
+            test: /\.json$/, loader: 'json'
         }]
     }
 };
