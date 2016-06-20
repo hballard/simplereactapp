@@ -34,6 +34,12 @@ class Contacts(db.Model):
         return '<Contact %r: %r>' % (self.id, self.first_name)
 
 
+def add_cors_header(response):
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    return response
+
+app.after_request(add_cors_header)
+
 manager = APIManager(app, flask_sqlalchemy_db=db)
 
 manager.create_api(Contacts, methods=['GET', 'POST', 'PATCH', 'DELETE'])
