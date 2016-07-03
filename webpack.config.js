@@ -1,5 +1,5 @@
 module.exports = {
-    entry: './static/main.js',
+    entry: './static/index.js',
     output: {
         path: './',
         filename: 'index.js'

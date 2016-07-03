@@ -2,7 +2,6 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_restless import APIManager
 
-
 SECRET_KEY = 'dev'
 SQLALCHEMY_DATABASE_URI = 'sqlite:///test.db'
 
