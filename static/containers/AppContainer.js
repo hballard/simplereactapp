@@ -1,32 +1,36 @@
 import React from 'react';
-import axios from 'axios';
+import { connect } from 'react-redux';
+import { changeContact, getContacts } from '../actions';
 import App from '../components/App';
 
-export default class AppContainer extends React.Component {
+class ContactApp extends React.Component {
   constructor() {
     super();
-    this.state = {
-      activeItem: 0,
-      data: null
-    };
-    this.changeContact = this.changeContact.bind(this);
+    this.selectContact = this.selectContact.bind(this);
   }
 
   componentDidMount() {
-    axios.get(this.props.url)
-      .then((response) => {
-        this.setState({data: response.data.objects});
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    this.props.dispatch(getContacts('http://0.0.0.0:5000/api/contacts'));
   }
 
-  changeContact(index) {
-    this.setState({activeItem: index});
+  selectContact(index) {
+    this.props.dispatch(changeContact(index));
   }
 
   render() {
-    return <App {...this.state} changeContact={ this.changeContact }/>;
+    return <App {...this.props} changeContact={ this.selectContact }/>;
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    activeItem: state.activeItem,
+    data: state.data
+  };
+};
+
+const AppContainer = connect(
+  mapStateToProps
+)(ContactApp);
+
+export default AppContainer;
