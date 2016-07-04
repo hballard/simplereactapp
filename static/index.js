@@ -4,10 +4,10 @@ import AppContainer from './containers/AppContainer';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
-import contactApp from './reducers';
+import appStore from './reducers';
 
 let store = createStore(
-    contactApp,
+    appStore,
     applyMiddleware(thunk)
 );
 

@@ -10,6 +10,9 @@ export const changeContact = (index) => {
 export const getContacts = (url) => {
   return (dispatch) => axios.get(url)
     .then((response) => {
-      dispatch({type: 'GET_CONTACTS', response});
+      dispatch({
+        type: 'GET_CONTACTS',
+        response
+      });
     });
 };

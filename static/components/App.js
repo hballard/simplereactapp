@@ -1,19 +1,16 @@
 import React from 'react';
-import ContactDetail from './ContactDetail';
 import LoadingScreen from './LoadingScreen';
-import ContactList from './ContactList';
+import ContactDetailContainer from '../containers/ContactDetailContainer';
+import ContactListContainer from '../containers/ContactListContainer';
 
-const App = (props) => {
-  if (!props.data) {
+const App = ({ data }) => {
+  if (!data) {
     return <LoadingScreen />;
   } else {
     return (
       <div id='main-container' className='container row'>
-        <ContactDetail data={ props.data[props.activeItem] }/>
-        <ContactList
-          changeContact={ props.changeContact }
-          data={ props.data }
-          activeItem={ props.activeItem }/>
+        <ContactDetailContainer />
+        <ContactListContainer />
       </div>
     );
   }

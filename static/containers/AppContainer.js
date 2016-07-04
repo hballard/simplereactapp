@@ -4,33 +4,30 @@ import { changeContact, getContacts } from '../actions';
 import App from '../components/App';
 
 class ContactApp extends React.Component {
-  constructor() {
-    super();
-    this.selectContact = this.selectContact.bind(this);
-  }
 
   componentDidMount() {
-    this.props.dispatch(getContacts('http://0.0.0.0:5000/api/contacts'));
-  }
-
-  selectContact(index) {
-    this.props.dispatch(changeContact(index));
+    this.props.getContacts();
   }
 
   render() {
-    return <App {...this.props} changeContact={ this.selectContact }/>;
+    return <App data={this.props.data} />;
   }
 }
 
 const mapStateToProps = (state) => {
   return {
-    activeItem: state.activeItem,
     data: state.data
   };
 };
 
-const AppContainer = connect(
-  mapStateToProps
-)(ContactApp);
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    getContacts: () => {
+      dispatch(getContacts('http://0.0.0.0:5000/api/contacts'));
+    }
+  };
+};
+
+const AppContainer = connect(mapStateToProps, mapDispatchToProps)(ContactApp);
 
 export default AppContainer;

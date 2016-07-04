@@ -2,9 +2,10 @@ import { combineReducers } from 'redux';
 import activeItem from './activeItem';
 import data from './data';
 
-const contactApp = combineReducers({
+const appStore = combineReducers({
   activeItem,
   data
 });
 
-export default contactApp;
+export default appStore;
+
