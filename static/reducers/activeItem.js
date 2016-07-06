@@ -1,10 +1,10 @@
 const activeItem = (state = 0, action) => {
   switch (action.type) {
     case 'CHANGE_CONTACT':
-      return action.index;
+      return action.index
     default:
-      return state;
-  };
-};
+      return state
+  }
+}
 
-export default activeItem;
+export default activeItem

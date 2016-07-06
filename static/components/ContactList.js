@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 
 const ContactList = ({data, activeItem, onContactClick}) => {
   return (
@@ -9,18 +9,18 @@ const ContactList = ({data, activeItem, onContactClick}) => {
       </div>
       <ul className='list-unstyled'>
         { data.map((element, index) => {
-            return (
-              <li
-                className={ index === (activeItem) ? 'active-item' : null }
-                onClick={ () => onContactClick(index) }
-                key={ element.id }>
-                { element.last_name }, { element.first_name }
-              </li>
-              );
-          }) }
+          return (
+            <li
+              className={ index === (activeItem) ? 'active-item' : null }
+              onClick={ () => onContactClick(index) }
+              key={ element.id }>
+              { element.last_name }, { element.first_name }
+            </li>
+          )
+        })}
       </ul>
     </div>
-    );
-};
+  )
+}
 
-export default ContactList;
+export default ContactList
