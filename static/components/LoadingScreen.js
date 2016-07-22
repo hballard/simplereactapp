@@ -5,7 +5,7 @@ const LoadingScreen = () => {
   return (
     <div id='main-container' className='container row'>
       <h2>Loading...</h2>
-      <ProgressBar active now={ 100 } />
+      <ProgressBar active now={ 100 }/>
     </div>
   )
 }

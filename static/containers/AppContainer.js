@@ -1,7 +1,7 @@
 /* @flow */
 import React from 'react'
 import { connect } from 'react-redux'
-import { changeContact, getContacts } from '../actions'
+import { getContacts } from '../actions'
 import App from '../components/App'
 
 class ContactApp extends React.Component {
@@ -22,7 +22,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     getContacts: () => {
-      dispatch(getContacts('http://0.0.0.0:5000/api/contacts'))
+      dispatch(getContacts(ownProps.url))
     }
   }
 }

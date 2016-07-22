@@ -17,3 +17,9 @@ export const getContacts = (url:string) => {
       })
     })
 }
+
+export const toggleAddUserFormState = () => {
+  return {
+    type: 'TOGGLE_ADD_CONTACT'
+  }
+}
