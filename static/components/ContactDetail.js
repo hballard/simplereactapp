@@ -9,7 +9,7 @@ const ContactDetail = (props) => {
         <h3><strong>Contact Info</strong></h3>
       </div>
       <div>
-        <h1>{ contact.first_name } { contact.last_name }</h1>
+        <h1>{ contact.firstName } { contact.lastName }</h1>
       </div>
       <div>
         <table className='table table-hover table-striped'>
@@ -27,7 +27,7 @@ const ContactDetail = (props) => {
                 <strong>Job Title:</strong>
               </td>
               <td>
-                { contact.job_title }
+                { contact.jobTitle }
               </td>
             </tr>
             <tr>
@@ -35,7 +35,7 @@ const ContactDetail = (props) => {
                 <strong>Phone Number:</strong>
               </td>
               <td>
-                { contact.phone_number }
+                { contact.phoneNumber }
               </td>
             </tr>
             <tr>

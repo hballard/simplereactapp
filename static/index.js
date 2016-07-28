@@ -15,7 +15,7 @@ let store = createStore(
   ))
 
 ReactDOM.render(
-  <Provider store={ store }>
-    <AppContainer url={ API_URL } />
+  <Provider store={store}>
+    <AppContainer url={API_URL} />
   </Provider>,
   document.getElementById('app'))

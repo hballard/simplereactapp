@@ -3,6 +3,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { changeContact } from '../actions'
 import ContactList from '../components/ContactList'
+import { actions } from 'react-redux-form'
 
 const mapStateToProps = (state) => {
   return {
@@ -13,8 +14,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onContactClick: (index) => {
+    onContactClick: (index, element) => {
       dispatch(changeContact(index))
+      dispatch(actions.merge('editUser', element))
     }
   }
 }

@@ -1,7 +1,7 @@
 /* @flow */
 import React from 'react'
 import { connect } from 'react-redux'
-import { getContacts } from '../actions'
+import { getContacts, toggleAddUserFormState, toggleEditUserFormState } from '../actions'
 import App from '../components/App'
 
 class ContactApp extends React.Component {
@@ -11,18 +11,24 @@ class ContactApp extends React.Component {
   }
 
   render() {
-    return <App data={ this.props.data } />
+    return <App {...this.props} />
   }
 }
 
 const mapStateToProps = (state) => {
-  return {data: state.data}
+  return {data: state.data[state.activeItem]}
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     getContacts: () => {
       dispatch(getContacts(ownProps.url))
+    },
+    toggleAddForm: () => {
+      dispatch(toggleAddUserFormState())
+    },
+    toggleEditForm: () => {
+      dispatch(toggleEditUserFormState())
     }
   }
 }

@@ -12,9 +12,9 @@ const ContactList = ({data, activeItem, onContactClick}) => {
           return (
             <li
               className={ index === (activeItem) ? 'active-item' : null }
-              onClick={ () => onContactClick(index) }
+              onClick={ () => onContactClick(index, element) }
               key={ element.id }>
-              { element.last_name }, { element.first_name }
+              { element.lastName }, { element.firstName }
             </li>
           )
         })}
