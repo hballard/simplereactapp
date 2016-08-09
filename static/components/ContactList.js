@@ -24,5 +24,10 @@ const ContactList = ({ data, activeItem, onContactClick }) => (
   </div>
 )
 
+ContactList.propTypes = {
+  data: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
+  activeItem: React.PropTypes.number.isRequired,
+  onContactClick: React.PropTypes.func.isRequired,
+}
 
 export default ContactList

@@ -75,4 +75,6 @@ const ContactDetail = (props) => {
   )
 }
 
+ContactDetail.propTypes = { data: React.PropTypes.object.isRequired }
+
 export default ContactDetail

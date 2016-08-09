@@ -1,4 +1,3 @@
-/* @flow */
 import { connect } from 'react-redux'
 import { changeContact } from '../actions'
 import ContactList from '../components/ContactList'

@@ -1,4 +1,3 @@
-/* @flow */
 import React from 'react'
 import { connect } from 'react-redux'
 import { fetchContacts, toggleAddUserFormState, toggleEditUserFormState } from '../actions'
@@ -14,6 +13,8 @@ class ContactApp extends React.Component {
     return <App {...this.props} />
   }
 }
+
+ContactApp.propTypes = { fetchContacts: React.PropTypes.func.isRequired }
 
 const mapStateToProps = state => ({ data: state.data[state.activeItem] })
 

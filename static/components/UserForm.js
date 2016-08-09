@@ -141,4 +141,6 @@ const UserForm = ({ formName }) => (
   </Form>
 )
 
+UserForm.propTypes = { formName: React.PropTypes.string.isRequired }
+
 export default UserForm

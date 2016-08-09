@@ -1,10 +1,10 @@
 import React from 'react'
+import { Button, ButtonToolbar } from 'react-bootstrap'
 import LoadingScreen from './LoadingScreen'
 import ContactDetailContainer from '../containers/ContactDetailContainer'
 import ContactListContainer from '../containers/ContactListContainer'
 import AddUserFormContainer from '../containers/AddUserFormContainer'
 import EditUserFormContainer from '../containers/EditUserFormContainer'
-import { Button, ButtonToolbar } from 'react-bootstrap'
 
 const App = ({ data, url, toggleAddForm, toggleEditForm }) => {
   if (!data) {
@@ -27,6 +27,13 @@ const App = ({ data, url, toggleAddForm, toggleEditForm }) => {
       </div>
     )
   }
+}
+
+App.propTypes = {
+  data: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
+  url: React.PropTypes.string.isRequired,
+  toggleAddForm: React.PropTypes.func.isRequired,
+  toggleEditForm: React.PropTypes.func.isRequired,
 }
 
 export default App

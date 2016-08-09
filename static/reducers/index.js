@@ -62,7 +62,7 @@ const appStore = combineReducers({
   addUser: modelReducer('addUser'),
   // addUserForm: formReducer('addUser'),
   editUser: modelReducer('editUser'),
-  // editUserForm: formReducer('editUser')
+  // editUserForm: formReducer('editUser'),
 })
 
 export default appStore

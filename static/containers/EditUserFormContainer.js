@@ -34,6 +34,14 @@ const EditUserForm = (props) => {
   )
 }
 
+EditUserForm.propTypes = {
+  url: React.PropTypes.string.isRequired,
+  editUser: React.PropTypes.string.isRequired,
+  toggleEditForm: React.PropTypes.func.isRequired,
+  editUserModalState: React.PropTypes.func.isRequired,
+  handleEditContact: React.PropTypes.func.isRequired,
+}
+
 const mapStateToProps = state => ({
   editUser: state.editUser,
   formName: 'editUser',

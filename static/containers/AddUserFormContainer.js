@@ -34,6 +34,14 @@ const AddUserForm = (props) => {
   )
 }
 
+AddUserForm.propTypes = {
+  handleSaveContact: React.PropTypes.func.isRequired,
+  addUser: React.PropTypes.object.isRequired,
+  addUserModalState: React.PropTypes.bool.isRequired,
+  toggleAddForm: React.PropTypes.func.isRequired,
+  url: React.PropTypes.string.isRequired,
+}
+
 const mapStateToProps = (state) => ({
   addUser: state.addUser,
   formName: 'addUser',
@@ -49,6 +57,9 @@ const mapDispatchToProps = dispatch => ({
   },
 })
 
-const AddUserFormContainer = connect(mapStateToProps, mapDispatchToProps)(AddUserForm)
+const AddUserFormContainer = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AddUserForm)
 
 export default AddUserFormContainer
