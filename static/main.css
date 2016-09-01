@@ -20,6 +20,11 @@ body {
   padding-bottom: 20em;
 }
 
+#list-container li:hover {
+  color: white;
+  background: #337ab7;
+}
+
 .list-unstyled {
   overflow-y: auto;
   max-height: 20em;

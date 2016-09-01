@@ -36,9 +36,9 @@ const EditUserForm = (props) => {
 
 EditUserForm.propTypes = {
   url: React.PropTypes.string.isRequired,
-  editUser: React.PropTypes.string.isRequired,
+  editUser: React.PropTypes.object.isRequired,
   toggleEditForm: React.PropTypes.func.isRequired,
-  editUserModalState: React.PropTypes.func.isRequired,
+  editUserModalState: React.PropTypes.bool.isRequired,
   handleEditContact: React.PropTypes.func.isRequired,
 }
 

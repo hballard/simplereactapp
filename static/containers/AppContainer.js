@@ -1,7 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { fetchContacts, toggleAddUserFormState, toggleEditUserFormState } from '../actions'
 import App from '../components/App'
+import {
+  fetchContacts,
+  toggleAddUserFormState,
+  toggleEditUserFormState,
+} from '../actions'
 
 class ContactApp extends React.Component {
 
@@ -19,9 +23,9 @@ ContactApp.propTypes = { fetchContacts: React.PropTypes.func.isRequired }
 const mapStateToProps = state => ({ data: state.data[state.activeItem] })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  fetchContacts: () => { dispatch(fetchContacts(ownProps.url)) },
-  toggleAddForm: () => { dispatch(toggleAddUserFormState()) },
-  toggleEditForm: () => { dispatch(toggleEditUserFormState()) },
+  fetchContacts: () => dispatch(fetchContacts(ownProps.url)),
+  toggleAddForm: () => dispatch(toggleAddUserFormState()),
+  toggleEditForm: () => dispatch(toggleEditUserFormState()),
 })
 
 const AppContainer = connect(mapStateToProps, mapDispatchToProps)(ContactApp)

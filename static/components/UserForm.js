@@ -1,9 +1,6 @@
 import React from 'react'
 import { Field, Form } from 'react-redux-form'
-import {
-  FormGroup,
-  ControlLabel,
-} from 'react-bootstrap'
+import { FormGroup, ControlLabel } from 'react-bootstrap'
 
 const UserForm = ({ formName }) => (
   <Form model={formName}>

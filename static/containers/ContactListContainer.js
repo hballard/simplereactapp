@@ -15,6 +15,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
 })
 
-const ContactListContainer = connect(mapStateToProps, mapDispatchToProps)(ContactList)
+const ContactListContainer = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ContactList)
 
 export default ContactListContainer

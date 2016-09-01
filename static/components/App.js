@@ -30,7 +30,7 @@ const App = ({ data, url, toggleAddForm, toggleEditForm }) => {
 }
 
 App.propTypes = {
-  data: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
+  data: React.PropTypes.object,
   url: React.PropTypes.string.isRequired,
   toggleAddForm: React.PropTypes.func.isRequired,
   toggleEditForm: React.PropTypes.func.isRequired,
