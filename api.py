@@ -1,6 +1,9 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from flask_restless import APIManager
+from flask_graphql import GraphQLView
+import graphene
+from graphene.contrib.sqlalchemy import SQLAlchemyConnectionField,\
+        SQLAlchemyNode
 
 SECRET_KEY = 'dev'
 SQLALCHEMY_DATABASE_URI = 'sqlite:///test.db'
@@ -9,6 +12,8 @@ app = Flask('api')
 app.config.from_object(__name__)
 
 db = SQLAlchemy(app)
+
+# declare flask_sqlalchemy models
 
 
 class Contacts(db.Model):
@@ -32,21 +37,41 @@ class Contacts(db.Model):
     def __repr__(self):
         return '<Contact %r: %r>' % (self.id, self.first_name)
 
+# declare graphql schema
+schema = graphene.Schema()
 
-def add_cors_header(response):
-    response.headers['Access-Control-Allow-Origin'] = '*'
-    response.headers['Access-Control-Allow-Credentials'] = 'true'
-    response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
-    response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PATCH, PUT,\
-    DELETE, OPTIONS'
-    return response
 
-app.after_request(add_cors_header)
+@schema.register
+class ContactsQ(SQLAlchemyNode):
+    class Meta:
+        model = Contacts
 
-manager = APIManager(app, flask_sqlalchemy_db=db)
 
-manager.create_api(Contacts, methods=['GET', 'POST', 'PATCH', 'DELETE'],
-                   results_per_page=25)
+class Query(graphene.ObjectType):
+    all_contacts = SQLAlchemyConnectionField(ContactsQ)
+
+
+schema.query = Query
+
+app.add_url_rule(
+    '/graphql',
+    view_func=GraphQLView.as_view(
+        'graphql',
+        schema=schema,
+        graphiql=True
+    )
+)
+
+# def add_cors_header(response):
+# response.headers['Access-Control-Allow-Origin'] = '*'
+# response.headers['Access-Control-Allow-Credentials'] = 'true'
+# response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
+# response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PATCH, PUT,\
+# DELETE, OPTIONS'
+# return response
+
+# app.after_request(add_cors_header)
+
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=True)
