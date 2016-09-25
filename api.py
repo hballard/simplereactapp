@@ -1,9 +1,9 @@
+import graphene
+from graphene import relay
+from graphene_sqlalchemy import SQLAlchemyObjectType, SQLAlchemyConnectionField
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_graphql import GraphQLView
-import graphene
-from graphene.contrib.sqlalchemy import SQLAlchemyConnectionField,\
-        SQLAlchemyNode
 
 SECRET_KEY = 'dev'
 SQLALCHEMY_DATABASE_URI = 'sqlite:///test.db'
@@ -12,8 +12,6 @@ app = Flask('api')
 app.config.from_object(__name__)
 
 db = SQLAlchemy(app)
-
-# declare flask_sqlalchemy models
 
 
 class Contacts(db.Model):
@@ -37,21 +35,98 @@ class Contacts(db.Model):
     def __repr__(self):
         return '<Contact %r: %r>' % (self.id, self.first_name)
 
-# declare graphql schema
-schema = graphene.Schema()
 
+class ContactsQuery(SQLAlchemyObjectType):
 
-@schema.register
-class ContactsQ(SQLAlchemyNode):
     class Meta:
         model = Contacts
+        interfaces = (relay.Node, )
 
 
 class Query(graphene.ObjectType):
-    all_contacts = SQLAlchemyConnectionField(ContactsQ)
+    node = relay.Node.Field()
+    all_contacts = SQLAlchemyConnectionField(ContactsQuery)
 
 
-schema.query = Query
+class AddContact(graphene.Mutation):
+
+    class Input:
+        first_name = graphene.String()
+        last_name = graphene.String()
+        job_title = graphene.String()
+        company = graphene.String()
+        phone_number = graphene.String()
+        email = graphene.String()
+        address1 = graphene.String()
+        city = graphene.String()
+        state = graphene.String()
+        zipcode = graphene.String()
+        comments = graphene.String()
+
+    ok = graphene.Boolean()
+    new_contact = graphene.Field(ContactsQuery)
+
+    @classmethod
+    def mutate(cls, instance, args, context, info):
+        new_contact = Contacts(**args)
+        db.session.add(new_contact)
+        db.session.commit()
+        ok = True
+        return AddContact(ok=ok, new_contact=new_contact)
+
+
+class EditContact(graphene.Mutation):
+
+    class Input:
+        id = graphene.ID(required=True)
+        first_name = graphene.String()
+        last_name = graphene.String()
+        job_title = graphene.String()
+        company = graphene.String()
+        phone_number = graphene.String()
+        email = graphene.String()
+        address1 = graphene.String()
+        city = graphene.String()
+        state = graphene.String()
+        zipcode = graphene.String()
+        comments = graphene.String()
+        active_status = graphene.Boolean()
+
+    ok = graphene.Boolean()
+    contact = graphene.Field(ContactsQuery)
+
+    @classmethod
+    def mutate(cls, instance, args, context, info):
+        Contacts.query.filter_by(id=args.get('id')).update(args)
+        db.session.commit()
+        ok = True
+        contact = Contacts.query.get(args.get('id'))
+        return EditContact(ok=ok, contact=contact)
+
+
+class DeleteContact(graphene.Mutation):
+
+    class Input:
+        id = graphene.ID(required=True)
+
+    ok = graphene.Boolean()
+    contact = graphene.Field(ContactsQuery)
+
+    @classmethod
+    def mutate(cls, instance, args, context, info):
+        contact = Contacts.query.get(args.get('id'))
+        db.session.delete(contact)
+        db.session.commit()
+        ok = True
+        return DeleteContact(ok=ok, contact=contact)
+
+
+class Mutations(graphene.ObjectType):
+    add_contact = AddContact.Field()
+    edit_contact = EditContact.Field()
+    delete_contact = DeleteContact.Field()
+
+schema = graphene.Schema(query=Query, mutation=Mutations)
 
 app.add_url_rule(
     '/graphql',
@@ -74,4 +149,4 @@ app.add_url_rule(
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', debug=True)
+    app.run(host='0.0.0.0')
