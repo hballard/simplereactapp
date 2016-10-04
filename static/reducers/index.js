@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux'
 import { modelReducer } from 'react-redux-form'
 import camelize from 'camelize'
+import ApolloClient from 'apollo-client'
 
 export const editUserModalState = (state = false, action) => {
   switch (action.type) {
@@ -54,7 +55,11 @@ export const data = (state = [], action) => {
   }
 }
 
-const appStore = combineReducers({
+export const client = new ApolloClient({
+  dataIdFromObject: o => o.id,
+})
+
+export const appStore = combineReducers({
   data,
   activeItem,
   addUserModalState,
@@ -63,7 +68,5 @@ const appStore = combineReducers({
   // addUserForm: formReducer('addUser'),
   editUser: modelReducer('editUser'),
   // editUserForm: formReducer('editUser'),
+  apollo: client.reducer(),
 })
-
-export default appStore
-

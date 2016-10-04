@@ -2,9 +2,9 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import AppContainer from './containers/AppContainer'
 import { createStore, applyMiddleware, compose } from 'redux'
-import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
-import appStore from './reducers'
+import { appStore, client } from './reducers'
+import { ApolloProvider } from 'react-apollo'
 
 const API_URL = 'http://0.0.0.0:5000/api/contacts'
 
@@ -14,7 +14,7 @@ let store = createStore(
   ))
 
 ReactDOM.render(
-  <Provider store={store}>
+  <ApolloProvider store={store} client={client}>
     <AppContainer url={API_URL} />
-  </Provider>,
+  </ApolloProvider>,
   document.getElementById('app'))

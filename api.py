@@ -1,6 +1,5 @@
 import graphene
-from graphene import relay
-from graphene_sqlalchemy import SQLAlchemyObjectType, SQLAlchemyConnectionField
+import graphene_sqlalchemy
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_graphql import GraphQLView
@@ -36,16 +35,16 @@ class Contacts(db.Model):
         return '<Contact %r: %r>' % (self.id, self.first_name)
 
 
-class ContactsQuery(SQLAlchemyObjectType):
+class ContactsQuery(graphene_sqlalchemy.SQLAlchemyObjectType):
 
     class Meta:
         model = Contacts
-        interfaces = (relay.Node, )
+        interfaces = (graphene.relay.Node, )
 
 
 class Query(graphene.ObjectType):
-    node = relay.Node.Field()
-    all_contacts = SQLAlchemyConnectionField(ContactsQuery)
+    node = graphene.relay.Node.Field()
+    all_contacts = graphene_sqlalchemy.SQLAlchemyConnectionField(ContactsQuery)
 
 
 class AddContact(graphene.Mutation):
@@ -64,7 +63,7 @@ class AddContact(graphene.Mutation):
         comments = graphene.String()
 
     ok = graphene.Boolean()
-    new_contact = graphene.Field(ContactsQuery)
+    new_contact = graphene.Field(lambda: ContactsQuery)
 
     @classmethod
     def mutate(cls, instance, args, context, info):
@@ -93,7 +92,7 @@ class EditContact(graphene.Mutation):
         active_status = graphene.Boolean()
 
     ok = graphene.Boolean()
-    contact = graphene.Field(ContactsQuery)
+    contact = graphene.Field(lambda: ContactsQuery)
 
     @classmethod
     def mutate(cls, instance, args, context, info):
@@ -110,7 +109,7 @@ class DeleteContact(graphene.Mutation):
         id = graphene.ID(required=True)
 
     ok = graphene.Boolean()
-    contact = graphene.Field(ContactsQuery)
+    contact = graphene.Field(lambda: ContactsQuery)
 
     @classmethod
     def mutate(cls, instance, args, context, info):
