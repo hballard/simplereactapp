@@ -47,7 +47,7 @@ class Query(graphene.ObjectType):
     all_contacts = graphene_sqlalchemy.SQLAlchemyConnectionField(ContactsQuery)
 
 
-class AddContact(graphene.Mutation):
+class AddContact(graphene.relay.ClientIDMutation):
 
     class Input:
         first_name = graphene.String()
@@ -66,15 +66,17 @@ class AddContact(graphene.Mutation):
     new_contact = graphene.Field(lambda: ContactsQuery)
 
     @classmethod
-    def mutate(cls, instance, args, context, info):
-        new_contact = Contacts(**args)
+    def mutate_and_get_payload(cls, args, context, info):
+        input = args.copy()
+        del input['clientMutationId']
+        new_contact = Contacts(**input)
         db.session.add(new_contact)
         db.session.commit()
         ok = True
         return AddContact(ok=ok, new_contact=new_contact)
 
 
-class EditContact(graphene.Mutation):
+class EditContact(graphene.relay.ClientIDMutation):
 
     class Input:
         id = graphene.ID(required=True)
@@ -95,15 +97,17 @@ class EditContact(graphene.Mutation):
     contact = graphene.Field(lambda: ContactsQuery)
 
     @classmethod
-    def mutate(cls, instance, args, context, info):
-        Contacts.query.filter_by(id=args.get('id')).update(args)
+    def mutate_and_get_payload(cls, args, context, info):
+        input = args.copy()
+        del input['clientMutationId']
+        Contacts.query.filter_by(id=args.get('id')).update(input)
         db.session.commit()
         ok = True
         contact = Contacts.query.get(args.get('id'))
         return EditContact(ok=ok, contact=contact)
 
 
-class DeleteContact(graphene.Mutation):
+class DeleteContact(graphene.relay.ClientIDMutation):
 
     class Input:
         id = graphene.ID(required=True)
@@ -112,7 +116,7 @@ class DeleteContact(graphene.Mutation):
     contact = graphene.Field(lambda: ContactsQuery)
 
     @classmethod
-    def mutate(cls, instance, args, context, info):
+    def mutate_and_get_payload(cls, args, context, info):
         contact = Contacts.query.get(args.get('id'))
         db.session.delete(contact)
         db.session.commit()
