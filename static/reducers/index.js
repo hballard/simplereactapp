@@ -1,7 +1,9 @@
 import { combineReducers } from 'redux'
 import { modelReducer } from 'react-redux-form'
 import camelize from 'camelize'
-import ApolloClient from 'apollo-client'
+import ApolloClient, { createNetworkInterface } from 'apollo-client'
+
+const API_URL = 'http://0.0.0.0:5000/graphql'
 
 export const editUserModalState = (state = false, action) => {
   switch (action.type) {
@@ -57,6 +59,7 @@ export const data = (state = [], action) => {
 
 export const client = new ApolloClient({
   dataIdFromObject: o => o.id,
+  networkInterface: createNetworkInterface(API_URL),
 })
 
 export const appStore = combineReducers({
