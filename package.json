@@ -4,8 +4,10 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "start": "webpack-dev-server --progress --inline --hot --content-base static/",
-    "build": "webpack -p"
+    "start": "parallelshell 'npm run watch' 'npm run api'",
+    "watch": "webpack-dev-server --progress --inline --hot --content-base static/",
+    "build": "webpack -p",
+    "api": "python api.py"
   },
   "author": "",
   "license": "ISC",
@@ -19,6 +21,7 @@
     "babel-preset-react-hmre": "^1.1.1",
     "eslint": "^2.9.0",
     "eslint-plugin-react": "^5.0.1",
+    "parallelshell": "^2.0.0",
     "webpack": "^1.13.0"
   },
   "dependencies": {
