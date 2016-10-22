@@ -132,23 +132,23 @@ class Mutations(graphene.ObjectType):
 schema = graphene.Schema(query=Query, mutation=Mutations)
 
 app.add_url_rule(
-    '/graphql',
-    view_func=GraphQLView.as_view(
-        'graphql',
-        schema=schema,
-        graphiql=True
-    )
-)
+        '/graphql',
+        view_func=GraphQLView.as_view(
+            'graphql',
+            schema=schema,
+            graphiql=True
+            )
+        )
 
-# def add_cors_header(response):
-# response.headers['Access-Control-Allow-Origin'] = '*'
-# response.headers['Access-Control-Allow-Credentials'] = 'true'
-# response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
-# response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PATCH, PUT,\
-# DELETE, OPTIONS'
-# return response
+def add_cors_header(response):
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    response.headers['Access-Control-Allow-Credentials'] = 'true'
+    response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
+    response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PATCH, PUT,\
+            DELETE, OPTIONS'
+    return response
 
-# app.after_request(add_cors_header)
+app.after_request(add_cors_header)
 
 
 if __name__ == "__main__":
