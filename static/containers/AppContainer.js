@@ -1,10 +1,11 @@
 import { connect } from 'react-redux'
-import App from '../components/App'
 import { graphql } from 'react-apollo'
 import gql from 'graphql-tag'
+import App from '../components/App'
 import {
   toggleAddUserFormState,
   toggleEditUserFormState,
+  initActiveItem,
 } from '../actions'
 
 const LIST_OF_CONTACTS = gql`
@@ -15,22 +16,33 @@ query ListOfContacts {
         id
         firstName
         lastName
+        jobTitle
+        company
+        phoneNumber
+        email
+        address1
+        city
+        state
+        zipcode
+        comments
+        activeStatus
       }
     }
   }
 }
 `
 const AppWithData = graphql(LIST_OF_CONTACTS, {
-  options: { pollInterval: 20000 },
-  props: (props) => ({
-    contacts: props.data.allContacts,
-    loading: props.data.loading,
+  // options: { pollInterval: 20000 },
+  props: ({ data: { allContacts, loading } }) => ({
+    contacts: allContacts,
+    loading,
   }),
 })(App)
 
-const mapDispatchToProps = (dispatch) => ({
-  toggleAddForm: () => dispatch(toggleAddUserFormState()),
-  toggleEditForm: () => dispatch(toggleEditUserFormState()),
+const mapDispatchToProps = dispatch => ({
+  toggleAddForm() { dispatch(toggleAddUserFormState()) },
+  toggleEditForm() { dispatch(toggleEditUserFormState()) },
+  initActiveItem(id) { dispatch(initActiveItem(id)) },
 })
 
 const AppWithDataContainer = connect(null, mapDispatchToProps)(AppWithData)

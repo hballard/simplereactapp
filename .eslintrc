@@ -1,0 +1,17 @@
+{
+  "parser": "babel-eslint",
+  "env": {
+	"browser": true,
+	"node": true
+  },
+  "extends": "airbnb",
+  "rules": {
+	"max-len": [1, 80, 2, {"ignoreComments": true}],
+	"quote-props": [1, "consistent-as-needed"],
+	"react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"]  }],
+	"no-unused-vars": [1, {"vars": "local", "args": "none"}],
+	"no-else-return": 0,
+	"semi": [2, "never"],
+	"no-static-element-interactions": 3
+  }
+}

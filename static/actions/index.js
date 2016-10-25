@@ -1,6 +1,6 @@
 import { actions } from 'react-redux-form'
 
-export const initFirstContact = id => ({
+export const initActiveItem = id => ({
   type: 'CONTACT_SELECT_ACTIVE',
   id
 })

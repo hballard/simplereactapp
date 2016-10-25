@@ -140,6 +140,7 @@ app.add_url_rule(
             )
         )
 
+
 def add_cors_header(response):
     response.headers['Access-Control-Allow-Origin'] = '*'
     response.headers['Access-Control-Allow-Credentials'] = 'true'

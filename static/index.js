@@ -1,11 +1,18 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { createStore, applyMiddleware, compose } from 'redux'
-import { modelReducer } from 'react-redux-form'
-import { combineReducers } from 'redux'
 import thunk from 'redux-thunk'
 import { ApolloProvider } from 'react-apollo'
 import ApolloClient, { createNetworkInterface } from 'apollo-client'
+import {
+  combineReducers,
+  createStore,
+  applyMiddleware,
+  compose,
+} from 'redux'
+import {
+  modelReducer,
+  formReducer,
+} from 'react-redux-form'
 import AppWithDataContainer from './containers/AppContainer'
 import {
   activeItem,
@@ -25,6 +32,7 @@ const networkInterface = createNetworkInterface({
 const client = new ApolloClient({
   networkInterface,
   dataIdFromObject: o => o.id,
+  shouldBatch: true,
 })
 
 const appStore = combineReducers({
@@ -32,9 +40,9 @@ const appStore = combineReducers({
   addUserModalState,
   editUserModalState,
   addUser: modelReducer('addUser'),
-  // addUserForm: formReducer('addUser'),
+  addUserForm: formReducer('addUser'),
   editUser: modelReducer('editUser'),
-  // editUserForm: formReducer('editUser'),
+  editUserForm: formReducer('editUser'),
   apollo: client.reducer(),
 })
 

@@ -25,6 +25,10 @@ body {
   background: #337ab7;
 }
 
+#contact-detail-container {
+  min-height: 30px;
+}
+
 .list-unstyled {
   overflow-y: auto;
   max-height: 20em;
