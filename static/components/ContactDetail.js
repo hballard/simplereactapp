@@ -8,7 +8,14 @@ class ContactDetail extends React.Component {
   }
 
   render() {
-    if (!this.props.data.loading) {
+    if (this.props.data.loading) {
+      return (
+        <div
+          className="col-lg-6 col-lg-offset-1 col-md-6 col-md-offset-1 col-sm-6
+                    col-sm-offset-2 col-xs-12"
+        />
+      )
+    } else {
       const contact = this.props.data.contact
       return (
         <div
@@ -81,8 +88,6 @@ class ContactDetail extends React.Component {
           </div>
         </div>
       )
-    } else {
-      return null
     }
   }
 }

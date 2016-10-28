@@ -12,6 +12,6 @@
 	"no-unused-vars": [1, {"vars": "local", "args": "none"}],
 	"no-else-return": 0,
 	"semi": [2, "never"],
-	"no-static-element-interactions": 3
+	"no-static-element-interactions": 0
   }
 }

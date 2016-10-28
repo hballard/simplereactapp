@@ -20,10 +20,10 @@ body {
   padding-bottom: 20em;
 }
 
-#list-container li:hover {
-  color: white;
-  background: #337ab7;
-}
+/*#list-container li:hover {*/
+  /*color: white;*/
+  /*background: #337ab7;*/
+/*}*/
 
 #contact-detail-container {
   min-height: 30px;

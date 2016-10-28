@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import { graphql } from 'react-apollo'
 import gql from 'graphql-tag'
 import ContactDetail from '../components/ContactDetail'
-import { loadEditFormData } from '../actions'
+// import { loadEditFormData } from '../actions'
 
 const CONTACT_DETAIL_QUERY = gql`
 query ContactDetailQuery($id: ID!) {
@@ -27,7 +27,7 @@ query ContactDetailQuery($id: ID!) {
 `
 const ContactDetailWithData = graphql(CONTACT_DETAIL_QUERY)(ContactDetail)
 
-const mapStateToProps = ({activeItem}) => ({
+const mapStateToProps = ({ activeItem }) => ({
   id: activeItem,
 })
 

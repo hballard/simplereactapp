@@ -16,23 +16,13 @@ query ListOfContacts {
         id
         firstName
         lastName
-        jobTitle
-        company
-        phoneNumber
-        email
-        address1
-        city
-        state
-        zipcode
-        comments
-        activeStatus
       }
     }
   }
 }
 `
 const AppWithData = graphql(LIST_OF_CONTACTS, {
-  // options: { pollInterval: 20000 },
+  options: { pollInterval: 20000 },
   props: ({ data: { allContacts, loading } }) => ({
     contacts: allContacts,
     loading,

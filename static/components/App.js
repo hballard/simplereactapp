@@ -19,9 +19,7 @@ class App extends React.Component {
 
   render() {
     if (this.props.loading) {
-      return (
-        <LoadingScreen />
-      )
+      return <LoadingScreen />
     } else {
       const sortedContacts = sortBy(
         this.props.contacts.edges,
