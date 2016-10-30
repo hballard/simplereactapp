@@ -24,10 +24,7 @@ const EditUserForm = (props) => {
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={() => toggleEditForm()}>Close</Button>
-          <Button
-            bsStyle="primary"
-            onClick={() => submitForm(editUser)}
-          >
+          <Button bsStyle="primary" onClick={() => submitForm(editUser)}>
             Save changes
           </Button>
         </Modal.Footer>
@@ -43,8 +40,8 @@ EditUserForm.propTypes = {
   editUserModalState: React.PropTypes.bool.isRequired,
 }
 
-const MUTATE_CONTACT_DETAIL = gql`
-mutation MutateContactDetail ($input: EditContactInput!){
+const EDIT_CONTACT = gql`
+mutation EditContact ($input: EditContactInput!){
   editContact(input: $input) {
     ok
     clientMutationId
@@ -66,9 +63,16 @@ mutation MutateContactDetail ($input: EditContactInput!){
   }
 }
 `
-const EditUserFormWithData = graphql(MUTATE_CONTACT_DETAIL, {
-  props: ({ mutate }) => ({
-    submitForm: editUser => mutate({ variables: { input: editUser } }),
+const EditUserFormWithData = graphql(EDIT_CONTACT, {
+  props: ({ mutate, ownProps: { toggleEditForm } }) => ({
+    submitForm: editUser => mutate({
+      variables: {
+        input: {
+          clientMutationId: Date.now(),
+          ...editUser,
+        },
+      },
+    }).then(toggleEditForm()),
   }),
 })(EditUserForm)
 

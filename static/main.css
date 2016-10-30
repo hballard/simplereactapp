@@ -20,10 +20,15 @@ body {
   padding-bottom: 20em;
 }
 
-/*#list-container li:hover {*/
-  /*color: white;*/
-  /*background: #337ab7;*/
-/*}*/
+span.glyphicon {
+  padding-left: .8em;
+}
+
+li {
+  display: inline-block;
+  padding-right: 15px;
+  padding-left: 15px;
+}
 
 #contact-detail-container {
   min-height: 30px;
@@ -35,11 +40,13 @@ body {
 }
 
 .vertical-align {
-    float: right;
+  float: right;
 }
 
 .active-item {
   color: white;
   background: #337ab7;
+  padding-right: 15px;
+  padding-left: 15px;
 }
 

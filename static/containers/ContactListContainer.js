@@ -1,7 +1,47 @@
 import { connect } from 'react-redux'
-import { changeContact } from '../actions'
+import { graphql } from 'react-apollo'
+import gql from 'graphql-tag'
 import ContactList from '../components/ContactList'
-import { actions } from 'react-redux-form'
+import { changeContact } from '../actions'
+
+const DELETE_CONTACT = gql`
+mutation deleteContact($input: DeleteContactInput!) {
+  deleteContact(input: $input) {
+    ok
+    clientMutationId
+    contact {
+      id
+      firstName
+      lastName
+    }
+  }
+}
+`
+const ContactListWithData = graphql(DELETE_CONTACT, {
+  props: ({ mutate }) => ({
+    deleteContact: element => mutate({
+      variables: {
+        input: {
+          id: element.node.id,
+          clientMutationId: Date.now(),
+        },
+      },
+      updateQueries: {
+        ListOfContacts: (prev, { mutationResult }) => {
+          const oldContactList = prev.allContacts.edges
+          const deletedContact = mutationResult.data.deleteContact.contact
+          return {
+            allContacts: {
+              edges: oldContactList.filter(
+                item => item.node.id !== deletedContact.id
+              ),
+            },
+          }
+        },
+      },
+    }),
+  }),
+})(ContactList)
 
 const mapStateToProps = (state, ownProps) => ({
   activeItem: state.activeItem,
@@ -15,6 +55,6 @@ const mapDispatchToProps = dispatch => ({
 const ContactListContainer = connect(
   mapStateToProps,
   mapDispatchToProps
-)(ContactList)
+)(ContactListWithData)
 
 export default ContactListContainer

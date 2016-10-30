@@ -12,7 +12,7 @@ class ContactDetail extends React.Component {
       return (
         <div
           className="col-lg-6 col-lg-offset-1 col-md-6 col-md-offset-1 col-sm-6
-                    col-sm-offset-2 col-xs-12"
+                    col-sm-offset-1 col-xs-12"
         />
       )
     } else {
@@ -20,7 +20,7 @@ class ContactDetail extends React.Component {
       return (
         <div
           className="col-lg-6 col-lg-offset-1 col-md-6 col-md-offset-1 col-sm-6
-          col-sm-offset-2 col-xs-12"
+          col-sm-offset-1 col-xs-12"
         >
           <div className="page-header">
             <h3><strong>Contact Info</strong></h3>
@@ -68,10 +68,10 @@ class ContactDetail extends React.Component {
                     <strong>Address:</strong>
                   </td>
                   <td>
-                    {contact.address}
+                    {contact.address1}
                     <br />
-                    {contact.city},
-                    {contact.state}
+                    {contact.city}{contact.city && contact.state ? ', ' : ' '}
+                    {contact.state}{contact.zipcode ? ' ' : null}
                     {contact.zipcode}
                   </td>
                 </tr>
@@ -94,7 +94,7 @@ class ContactDetail extends React.Component {
 
 ContactDetail.propTypes = {
   dispatch: React.PropTypes.func.isRequired,
-  data: React.PropTypes.objectOf(React.PropTypes.object),
+  data: React.PropTypes.object,
 }
 
 export default ContactDetail

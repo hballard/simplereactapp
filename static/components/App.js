@@ -47,7 +47,7 @@ class App extends React.Component {
 
 App.propTypes = {
   initActiveItem: React.PropTypes.func.isRequired,
-  contacts: React.PropTypes.arrayOf(React.PropTypes.object),
+  contacts: React.PropTypes.object,
   loading: React.PropTypes.bool.isRequired,
   toggleAddForm: React.PropTypes.func.isRequired,
   toggleEditForm: React.PropTypes.func.isRequired,

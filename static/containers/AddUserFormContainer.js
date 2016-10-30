@@ -1,16 +1,19 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Modal, Button } from 'react-bootstrap'
-import { toggleAddUserFormState, saveNewContact } from '../actions'
+import { graphql } from 'react-apollo'
+import gql from 'graphql-tag'
+import { actions } from 'react-redux-form'
+import { toggleAddUserFormState } from '../actions'
 import UserForm from '../components/UserForm'
 
 const AddUserForm = (props) => {
   const {
-    handleSaveContact,
+    submitForm,
     addUser,
     addUserModalState,
     toggleAddForm,
-    url } = props
+    } = props
   return (
     <div>
       <Modal show={addUserModalState} >
@@ -24,7 +27,7 @@ const AddUserForm = (props) => {
           <Button onClick={() => toggleAddForm()}>Close</Button>
           <Button
             bsStyle="primary"
-            onClick={() => handleSaveContact(url, addUser)}
+            onClick={() => submitForm(addUser)}
           >
             Save changes
           </Button>
@@ -35,31 +38,80 @@ const AddUserForm = (props) => {
 }
 
 AddUserForm.propTypes = {
-  handleSaveContact: React.PropTypes.func.isRequired,
   addUser: React.PropTypes.object.isRequired,
   addUserModalState: React.PropTypes.bool.isRequired,
+  submitForm: React.PropTypes.func.isRequired,
   toggleAddForm: React.PropTypes.func.isRequired,
-  url: React.PropTypes.string.isRequired,
 }
 
-const mapStateToProps = (state) => ({
+const ADD_CONTACT = gql`
+mutation addContact($input: AddContactInput!) {
+  addContact(input: $input) {
+    ok
+    clientMutationId
+    contact {
+      id
+      firstName
+      lastName
+      jobTitle
+      company
+      phoneNumber
+      email
+      city
+      state
+      zipcode
+      comments
+      address1
+    }
+  }
+}
+`
+
+const AddUserFormWithData = graphql(ADD_CONTACT, {
+  props: ({ mutate, ownProps: { toggleAddForm, resetAddForm } }) => ({
+    submitForm: addUser => mutate({
+      variables: {
+        input: {
+          clientMutationId: Date.now(),
+          ...addUser,
+        },
+      },
+      updateQueries: {
+        ListOfContacts: (prev, { mutationResult }) => {
+          const oldContactList = prev.allContacts.edges
+          const newContact = mutationResult.data.addContact.contact
+          return {
+            allContacts: {
+              edges: [
+                ...oldContactList,
+                { node: newContact },
+              ],
+            },
+          }
+        },
+      },
+    }).then(
+        toggleAddForm()
+    ).then(
+      resetAddForm()
+    ),
+  }),
+})(AddUserForm)
+
+const mapStateToProps = state => ({
   addUser: state.addUser,
   formName: 'addUser',
   addUserModalState: state.addUserModalState,
 })
 
 const mapDispatchToProps = dispatch => ({
-  toggleAddForm: () => {
-    dispatch(toggleAddUserFormState())
-  },
-  handleSaveContact: (url, addUser) => {
-    dispatch(saveNewContact(url, addUser))
-  },
+  toggleAddForm: () => { dispatch(toggleAddUserFormState()) },
+  resetAddForm: () => { dispatch(actions.reset('addUser')) },
 })
 
 const AddUserFormContainer = connect(
   mapStateToProps,
   mapDispatchToProps
-)(AddUserForm)
+)(AddUserFormWithData)
 
 export default AddUserFormContainer

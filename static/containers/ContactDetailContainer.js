@@ -2,7 +2,6 @@ import { connect } from 'react-redux'
 import { graphql } from 'react-apollo'
 import gql from 'graphql-tag'
 import ContactDetail from '../components/ContactDetail'
-// import { loadEditFormData } from '../actions'
 
 const CONTACT_DETAIL_QUERY = gql`
 query ContactDetailQuery($id: ID!) {

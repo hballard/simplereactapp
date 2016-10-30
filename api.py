@@ -63,17 +63,17 @@ class AddContact(graphene.relay.ClientIDMutation):
         comments = graphene.String()
 
     ok = graphene.Boolean()
-    new_contact = graphene.Field(lambda: ContactsQuery)
+    contact = graphene.Field(lambda: ContactsQuery)
 
     @classmethod
     def mutate_and_get_payload(cls, args, context, info):
-        input = args.copy()
-        del input['clientMutationId']
-        new_contact = Contacts(**input)
+        _input = args.copy()
+        del _input['clientMutationId']
+        new_contact = Contacts(**_input)
         db.session.add(new_contact)
         db.session.commit()
         ok = True
-        return AddContact(ok=ok, new_contact=new_contact)
+        return AddContact(ok=ok, contact=new_contact)
 
 
 class EditContact(graphene.relay.ClientIDMutation):
@@ -98,12 +98,14 @@ class EditContact(graphene.relay.ClientIDMutation):
 
     @classmethod
     def mutate_and_get_payload(cls, args, context, info):
-        input = args.copy()
-        del input['clientMutationId']
-        Contacts.query.filter_by(id=args.get('id')).update(input)
+        _input = args.copy()
+        _type, _id = graphene.relay.node.from_global_id(_input.get('id'))
+        _input['id'] = _id
+        del _input['clientMutationId']
+        Contacts.query.filter_by(id=_input.get('id')).update(_input)
         db.session.commit()
         ok = True
-        contact = Contacts.query.get(args.get('id'))
+        contact = Contacts.query.get(_input.get('id'))
         return EditContact(ok=ok, contact=contact)
 
 
@@ -117,7 +119,10 @@ class DeleteContact(graphene.relay.ClientIDMutation):
 
     @classmethod
     def mutate_and_get_payload(cls, args, context, info):
-        contact = Contacts.query.get(args.get('id'))
+        _input = args.copy()
+        _type, _id = graphene.relay.node.from_global_id(_input.get('id'))
+        _input['id'] = _id
+        contact = Contacts.query.get(_input.get('id'))
         db.session.delete(contact)
         db.session.commit()
         ok = True
