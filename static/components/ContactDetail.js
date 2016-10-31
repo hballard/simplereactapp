@@ -1,5 +1,6 @@
 import React from 'react'
 import { actions } from 'react-redux-form'
+import { ProgressBar } from 'react-bootstrap'
 
 class ContactDetail extends React.Component {
 
@@ -12,8 +13,11 @@ class ContactDetail extends React.Component {
       return (
         <div
           className="col-lg-6 col-lg-offset-1 col-md-6 col-md-offset-1 col-sm-6
-                    col-sm-offset-1 col-xs-12"
-        />
+                    col-sm-offset-1 col-xs-12 detail-spinner"
+        >
+          <h4>Loading...</h4>
+          <ProgressBar active now={100} />
+        </div>
       )
     } else {
       const contact = this.props.data.contact

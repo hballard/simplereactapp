@@ -24,7 +24,12 @@ query ContactDetailQuery($id: ID!) {
   }
 }
 `
-const ContactDetailWithData = graphql(CONTACT_DETAIL_QUERY)(ContactDetail)
+const ContactDetailWithData = graphql(CONTACT_DETAIL_QUERY, {
+  options: ({ id }) => ({
+    // forceFetch: true,
+    variables: { id },
+  }),
+})(ContactDetail)
 
 const mapStateToProps = ({ activeItem }) => ({
   id: activeItem,

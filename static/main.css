@@ -30,6 +30,11 @@ li {
   padding-left: 15px;
 }
 
+.detail-spinner {
+  height: 30em;
+  padding-top: 13em;
+}
+
 #contact-detail-container {
   min-height: 30px;
 }
