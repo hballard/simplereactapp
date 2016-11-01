@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, ButtonToolbar } from 'react-bootstrap'
+import { Button } from 'react-bootstrap'
 import sortBy from 'lodash/sortBy'
 import LoadingScreen from './LoadingScreen'
 import ContactDetailContainer from '../containers/ContactDetailContainer'
@@ -27,18 +27,20 @@ class App extends React.Component {
       )
       return (
         <div id="main-container" className="container row">
-          <ContactDetailContainer />
-          <ContactListContainer contacts={sortedContacts} />
+          <div className="list-detail-container">
+            <ContactDetailContainer />
+            <ContactListContainer contacts={sortedContacts} />
+          </div>
           <AddUserFormContainer />
           <EditUserFormContainer />
-          <ButtonToolbar>
-            <Button bsStyle="primary" onClick={this.props.toggleAddForm}>
-              Add Contact
-            </Button>
-            <Button bsStyle="primary" onClick={this.props.toggleEditForm}>
-              Edit Contact
-            </Button>
-          </ButtonToolbar>
+          <hr className="contact-app" />
+          <Button
+            className="add-contact"
+            bsStyle="primary"
+            onClick={this.props.toggleAddForm}
+          >
+            <span className="glyphicon glyphicon-plus" />
+          </Button>
         </div>
       )
     }
@@ -50,7 +52,6 @@ App.propTypes = {
   contacts: React.PropTypes.object,
   loading: React.PropTypes.bool.isRequired,
   toggleAddForm: React.PropTypes.func.isRequired,
-  toggleEditForm: React.PropTypes.func.isRequired,
 }
 
 export default App

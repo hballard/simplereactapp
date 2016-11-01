@@ -4,7 +4,6 @@ import gql from 'graphql-tag'
 import App from '../components/App'
 import {
   toggleAddUserFormState,
-  toggleEditUserFormState,
   initActiveItem,
 } from '../actions'
 
@@ -31,7 +30,6 @@ const AppWithData = graphql(LIST_OF_CONTACTS, {
 
 const mapDispatchToProps = dispatch => ({
   toggleAddForm() { dispatch(toggleAddUserFormState()) },
-  toggleEditForm() { dispatch(toggleEditUserFormState()) },
   initActiveItem(id) { dispatch(initActiveItem(id)) },
 })
 

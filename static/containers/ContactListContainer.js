@@ -2,7 +2,10 @@ import { connect } from 'react-redux'
 import { graphql } from 'react-apollo'
 import gql from 'graphql-tag'
 import ContactList from '../components/ContactList'
-import { changeContact } from '../actions'
+import { changeContact,
+  toggleEditUserFormState,
+  toggleContactListEdit,
+} from '../actions'
 
 const DELETE_CONTACT = gql`
 mutation deleteContact($input: DeleteContactInput!) {
@@ -46,10 +49,13 @@ const ContactListWithData = graphql(DELETE_CONTACT, {
 const mapStateToProps = (state, ownProps) => ({
   activeItem: state.activeItem,
   contacts: ownProps.contacts,
+  contactListEdit: state.contactListEditToggle,
 })
 
 const mapDispatchToProps = dispatch => ({
   onContactClick(element) { dispatch(changeContact(element)) },
+  toggleEditForm() { dispatch(toggleEditUserFormState()) },
+  toggleEditBar() { dispatch(toggleContactListEdit()) },
 })
 
 const ContactListContainer = connect(

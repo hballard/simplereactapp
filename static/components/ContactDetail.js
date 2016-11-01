@@ -24,7 +24,7 @@ class ContactDetail extends React.Component {
       return (
         <div
           className="col-lg-6 col-lg-offset-1 col-md-6 col-md-offset-1 col-sm-6
-          col-sm-offset-1 col-xs-12"
+          col-sm-offset-1 col-xs-12 detail-container"
         >
           <div className="page-header">
             <h3><strong>Contact Info</strong></h3>
