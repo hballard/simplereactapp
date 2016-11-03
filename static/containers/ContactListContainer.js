@@ -1,23 +1,66 @@
 import { connect } from 'react-redux'
-import { changeContact } from '../actions'
+import { graphql } from 'react-apollo'
+import gql from 'graphql-tag'
 import ContactList from '../components/ContactList'
-import { actions } from 'react-redux-form'
+import { changeContact,
+  toggleEditUserFormState,
+  toggleContactListEdit,
+} from '../actions'
 
-const mapStateToProps = (state) => ({
+const DELETE_CONTACT = gql`
+mutation deleteContact($input: DeleteContactInput!) {
+  deleteContact(input: $input) {
+    ok
+    clientMutationId
+    contact {
+      id
+      firstName
+      lastName
+    }
+  }
+}
+`
+const ContactListWithData = graphql(DELETE_CONTACT, {
+  props: ({ mutate }) => ({
+    deleteContact: element => mutate({
+      variables: {
+        input: {
+          id: element.node.id,
+          clientMutationId: Date.now(),
+        },
+      },
+      updateQueries: {
+        ListOfContacts: (prev, { mutationResult }) => {
+          const oldContactList = prev.allContacts.edges
+          const deletedContact = mutationResult.data.deleteContact.contact
+          return {
+            allContacts: {
+              edges: oldContactList.filter(
+                item => item.node.id !== deletedContact.id
+              ),
+            },
+          }
+        },
+      },
+    }),
+  }),
+})(ContactList)
+
+const mapStateToProps = (state, ownProps) => ({
   activeItem: state.activeItem,
-  data: state.data,
+  contacts: ownProps.contacts,
+  contactListEdit: state.contactListEditToggle,
 })
 
-const mapDispatchToProps = (dispatch) => ({
-  onContactClick: (index, element) => {
-    dispatch(changeContact(index))
-    dispatch(actions.merge('editUser', element))
-  },
+const mapDispatchToProps = dispatch => ({
+  onContactClick(element) { dispatch(changeContact(element)) },
+  toggleEditForm() { dispatch(toggleEditUserFormState()) },
+  toggleEditBar() { dispatch(toggleContactListEdit()) },
 })
 
 const ContactListContainer = connect(
   mapStateToProps,
   mapDispatchToProps
-)(ContactList)
+)(ContactListWithData)
 
 export default ContactListContainer

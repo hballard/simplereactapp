@@ -1,6 +1,6 @@
 
 body {
-  background: #0b97c4;
+  background: #337ab7;
   font-size: 16px;
   line-height: 2em;
 }
@@ -15,14 +15,50 @@ body {
 
 #list-container {
   padding-left: 1em;
-  height: 30em;
   text-align: center;
-  padding-bottom: 20em;
+  /*height: 30em;*/
 }
 
-#list-container li:hover {
-  color: white;
-  background: #337ab7;
+.list-detail-container {
+  height: 29em;
+}
+
+.detail-container {
+  max-height: 29em;
+}
+
+.glyphicon-edit {
+  padding-left: .5em;
+  color: #337ab7;
+}
+
+.glyphicon-edit:hover {
+  color: #215079;
+}
+
+.glyphicon-trash {
+  padding-left: .5em;
+  color: #337ab7;
+}
+
+.glyphicon-trash:hover {
+  color: #215079;
+}
+
+
+li {
+  display: inline-block;
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+.detail-spinner {
+  /*height: 30em;*/
+  padding-top: 13em;
+}
+
+#contact-detail-container {
+  /*max-height: 30px;*/
 }
 
 .list-unstyled {
@@ -31,11 +67,47 @@ body {
 }
 
 .vertical-align {
-    float: right;
+  float: right;
 }
 
 .active-item {
   color: white;
   background: #337ab7;
+  padding-right: 15px;
+  padding-left: 15px;
 }
 
+button.add-contact.btn {
+  border-radius: 100%;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+  font-size: 1em;
+  width: 5em;
+  height: 5em;
+  border: none;
+  outline: none;
+  z-index: 3;
+  float: right;
+  margin: 7px 30px;
+  /*background: #0b97c4;*/
+}
+
+/*.btn-primary.focus {*/
+  /*background-color: #337ab7*/
+/*}*/
+
+/*.btn-primary:focus {*/
+  /*background-color: #337ab7*/
+/*}*/
+
+.glyphicon-plus {
+  font-size: 1.5em;
+}
+
+hr.contact-app {
+  margin-top: 0px;
+  margin-bottom: 10px;
+}
+
+span.contact-list-edit {
+  transition: all 1s ease-in-out;
+}

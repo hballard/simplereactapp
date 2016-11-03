@@ -1,33 +1,38 @@
-import React from 'react'
 import { connect } from 'react-redux'
+import { graphql } from 'react-apollo'
+import gql from 'graphql-tag'
 import App from '../components/App'
 import {
-  fetchContacts,
   toggleAddUserFormState,
-  toggleEditUserFormState,
+  initActiveItem,
 } from '../actions'
 
-class ContactApp extends React.Component {
-
-  componentDidMount() {
-    this.props.fetchContacts()
-  }
-
-  render() {
-    return <App {...this.props} />
+const LIST_OF_CONTACTS = gql`
+query ListOfContacts {
+  allContacts {
+    edges {
+      node {
+        id
+        firstName
+        lastName
+      }
+    }
   }
 }
+`
+const AppWithData = graphql(LIST_OF_CONTACTS, {
+  options: { pollInterval: 20000 },
+  props: ({ data: { allContacts, loading } }) => ({
+    contacts: allContacts,
+    loading,
+  }),
+})(App)
 
-ContactApp.propTypes = { fetchContacts: React.PropTypes.func.isRequired }
-
-const mapStateToProps = state => ({ data: state.data[state.activeItem] })
-
-const mapDispatchToProps = (dispatch, ownProps) => ({
-  fetchContacts: () => dispatch(fetchContacts(ownProps.url)),
-  toggleAddForm: () => dispatch(toggleAddUserFormState()),
-  toggleEditForm: () => dispatch(toggleEditUserFormState()),
+const mapDispatchToProps = dispatch => ({
+  toggleAddForm() { dispatch(toggleAddUserFormState()) },
+  initActiveItem(id) { dispatch(initActiveItem(id)) },
 })
 
-const AppContainer = connect(mapStateToProps, mapDispatchToProps)(ContactApp)
+const AppWithDataContainer = connect(null, mapDispatchToProps)(AppWithData)
 
-export default AppContainer
+export default AppWithDataContainer

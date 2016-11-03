@@ -1,16 +1,18 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Modal, Button } from 'react-bootstrap'
-import { toggleEditUserFormState, saveEditContact } from '../actions'
+import { graphql } from 'react-apollo'
+import gql from 'graphql-tag'
+import { toggleEditUserFormState } from '../actions'
 import UserForm from '../components/UserForm'
 
 const EditUserForm = (props) => {
   const {
-    handleEditContact,
     editUser,
+    submitForm,
     editUserModalState,
     toggleEditForm,
-    url } = props
+  } = props
   return (
     <div>
       <Modal show={editUserModalState} >
@@ -22,10 +24,7 @@ const EditUserForm = (props) => {
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={() => toggleEditForm()}>Close</Button>
-          <Button
-            bsStyle="primary"
-            onClick={() => handleEditContact(url, editUser)}
-          >
+          <Button bsStyle="primary" onClick={() => submitForm(editUser)}>
             Save changes
           </Button>
         </Modal.Footer>
@@ -35,12 +34,47 @@ const EditUserForm = (props) => {
 }
 
 EditUserForm.propTypes = {
-  url: React.PropTypes.string.isRequired,
   editUser: React.PropTypes.object.isRequired,
   toggleEditForm: React.PropTypes.func.isRequired,
+  submitForm: React.PropTypes.func.isRequired,
   editUserModalState: React.PropTypes.bool.isRequired,
-  handleEditContact: React.PropTypes.func.isRequired,
 }
+
+const EDIT_CONTACT = gql`
+mutation EditContact ($input: EditContactInput!){
+  editContact(input: $input) {
+    ok
+    clientMutationId
+    contact {
+      id
+      firstName
+      lastName
+      jobTitle
+      company
+      phoneNumber
+      email
+      address1
+      city
+      state
+      zipcode
+      comments
+      activeStatus
+    }
+  }
+}
+`
+const EditUserFormWithData = graphql(EDIT_CONTACT, {
+  props: ({ mutate, ownProps: { toggleEditForm } }) => ({
+    submitForm: editUser => mutate({
+      variables: {
+        input: {
+          clientMutationId: Date.now(),
+          ...editUser,
+        },
+      },
+    }).then(toggleEditForm()),
+  }),
+})(EditUserForm)
 
 const mapStateToProps = state => ({
   editUser: state.editUser,
@@ -52,11 +86,11 @@ const mapDispatchToProps = dispatch => ({
   toggleEditForm: () => {
     dispatch(toggleEditUserFormState())
   },
-  handleEditContact: (url, editUser) => {
-    dispatch(saveEditContact(url, editUser))
-  },
 })
 
-const EditUserFormContainer = connect(mapStateToProps, mapDispatchToProps)(EditUserForm)
+const EditUserFormContainer = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(EditUserFormWithData)
 
 export default EditUserFormContainer
