@@ -3,11 +3,11 @@ import React from 'react'
 const ContactList = ({
   contacts,
   activeItem,
-  contactListEdit,
-  deleteContact,
-  onContactClick,
+  contactListEditState,
+  selectContact,
   toggleEditForm,
   toggleEditBar,
+  toggleDeleteConfBox,
 }) => (
   <div
     id="list-container"
@@ -25,17 +25,17 @@ const ContactList = ({
         >
           <li
             className={element.node.id === activeItem ? 'active-item' : null}
-            onClick={() => onContactClick(element)}
+            onClick={() => selectContact(element)}
             onDoubleClick={() => toggleEditBar()}
             key={element.node.id}
           >
             {element.node.lastName}, {element.node.firstName}
           </li>
-          {element.node.id === activeItem && contactListEdit ? (
+          {element.node.id === activeItem && contactListEditState ? (
             <span className="contact-list-edit">
               <i
                 className="glyphicon glyphicon-trash"
-                onClick={() => deleteContact(element)}
+                onClick={() => toggleDeleteConfBox()}
               />
               <i
                 className="glyphicon glyphicon-edit"
@@ -53,9 +53,9 @@ const ContactList = ({
 ContactList.propTypes = {
   contacts: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
   activeItem: React.PropTypes.string,
-  contactListEdit: React.PropTypes.bool.isRequired,
-  onContactClick: React.PropTypes.func.isRequired,
-  deleteContact: React.PropTypes.func.isRequired,
+  contactListEditState: React.PropTypes.bool.isRequired,
+  selectContact: React.PropTypes.func.isRequired,
+  toggleDeleteConfBox: React.PropTypes.func.isRequired,
   toggleEditForm: React.PropTypes.func.isRequired,
   toggleEditBar: React.PropTypes.func.isRequired,
 }

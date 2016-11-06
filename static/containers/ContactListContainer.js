@@ -1,66 +1,27 @@
 import { connect } from 'react-redux'
-import { graphql } from 'react-apollo'
-import gql from 'graphql-tag'
 import ContactList from '../components/ContactList'
 import { changeContact,
   toggleEditUserFormState,
-  toggleContactListEdit,
+  toggleContactListEditState,
+  toggleDeleteConfBoxState,
 } from '../actions'
-
-const DELETE_CONTACT = gql`
-mutation deleteContact($input: DeleteContactInput!) {
-  deleteContact(input: $input) {
-    ok
-    clientMutationId
-    contact {
-      id
-      firstName
-      lastName
-    }
-  }
-}
-`
-const ContactListWithData = graphql(DELETE_CONTACT, {
-  props: ({ mutate }) => ({
-    deleteContact: element => mutate({
-      variables: {
-        input: {
-          id: element.node.id,
-          clientMutationId: Date.now(),
-        },
-      },
-      updateQueries: {
-        ListOfContacts: (prev, { mutationResult }) => {
-          const oldContactList = prev.allContacts.edges
-          const deletedContact = mutationResult.data.deleteContact.contact
-          return {
-            allContacts: {
-              edges: oldContactList.filter(
-                item => item.node.id !== deletedContact.id
-              ),
-            },
-          }
-        },
-      },
-    }),
-  }),
-})(ContactList)
 
 const mapStateToProps = (state, ownProps) => ({
   activeItem: state.activeItem,
   contacts: ownProps.contacts,
-  contactListEdit: state.contactListEditToggle,
+  contactListEditState: state.contactListEditState,
 })
 
 const mapDispatchToProps = dispatch => ({
-  onContactClick(element) { dispatch(changeContact(element)) },
+  selectContact(element) { dispatch(changeContact(element)) },
   toggleEditForm() { dispatch(toggleEditUserFormState()) },
-  toggleEditBar() { dispatch(toggleContactListEdit()) },
+  toggleEditBar() { dispatch(toggleContactListEditState()) },
+  toggleDeleteConfBox() { dispatch(toggleDeleteConfBoxState()) },
 })
 
 const ContactListContainer = connect(
   mapStateToProps,
   mapDispatchToProps
-)(ContactListWithData)
+)(ContactList)
 
 export default ContactListContainer

@@ -18,7 +18,8 @@ import {
   activeItem,
   addUserModalState,
   editUserModalState,
-  contactListEditToggle,
+  contactListEditState,
+  deleteConfirmationState,
 } from './reducers'
 
 const API_URL = 'http://0.0.0.0:5000/graphql'
@@ -33,14 +34,14 @@ const networkInterface = createNetworkInterface({
 const client = new ApolloClient({
   networkInterface,
   dataIdFromObject: o => o.id,
-  shouldBatch: true,
 })
 
 const appStore = combineReducers({
   activeItem,
   addUserModalState,
   editUserModalState,
-  contactListEditToggle,
+  contactListEditState,
+  deleteConfirmationState,
   addUser: modelReducer('addUser'),
   addUserForm: formReducer('addUser'),
   editUser: modelReducer('editUser'),

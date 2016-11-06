@@ -4,8 +4,10 @@ import { ProgressBar } from 'react-bootstrap'
 
 class ContactDetail extends React.Component {
 
-  componentWillReceiveProps({ data: { contact } }) {
-    this.props.dispatch(actions.merge('editUser', contact))
+  componentWillReceiveProps(nextProps) {
+    if (!nextProps.data.loading) {
+      this.props.dispatch(actions.merge('editUser', nextProps.data.contact))
+    }
   }
 
   render() {

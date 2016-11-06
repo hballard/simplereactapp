@@ -6,6 +6,7 @@ import ContactDetailContainer from '../containers/ContactDetailContainer'
 import ContactListContainer from '../containers/ContactListContainer'
 import AddUserFormContainer from '../containers/AddUserFormContainer'
 import EditUserFormContainer from '../containers/EditUserFormContainer'
+import DeleteConfirmationContainer from '../containers/DeleteConfirmation'
 
 class App extends React.Component {
 
@@ -33,6 +34,7 @@ class App extends React.Component {
           </div>
           <AddUserFormContainer />
           <EditUserFormContainer />
+          <DeleteConfirmationContainer />
           <hr className="contact-app" />
           <Button
             className="add-contact"

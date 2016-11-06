@@ -16,7 +16,11 @@ export const toggleEditUserFormState = () => ({
   type: 'EDIT_CONTACT_TOGGLE',
 })
 
-export const toggleContactListEdit = () => ({
+export const toggleContactListEditState = () => ({
   type: 'CONTACT_LIST_EDIT_TOGGLE',
+})
+
+export const toggleDeleteConfBoxState = () => ({
+  type: 'DELETE_CONFIRMATION_TOGGLE',
 })
 
