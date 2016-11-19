@@ -1,9 +1,55 @@
 import React from 'react'
-import { actions } from 'react-redux-form'
-import { ProgressBar } from 'react-bootstrap'
+import { actions, Control } from 'react-redux-form'
+import {
+  OverlayTrigger,
+  Popover,
+  ProgressBar,
+} from 'react-bootstrap'
 import { connect } from 'react-redux'
 import { graphql } from 'react-apollo'
 import gql from 'graphql-tag'
+
+
+const popoverRight = (
+  <Popover
+    id="popover-positioned-right"
+    title="Select Fields to Display"
+  >
+    <div className="list-group">
+      <label>
+        <Control.checkbox
+          model="fieldChooser.jobTitle" />
+        &nbsp;&nbsp;Job Title
+      </label>
+      <label>
+        <Control.checkbox
+          model="fieldChooser.company" />
+        &nbsp;&nbsp;Company
+      </label>
+      <label>
+        <Control.checkbox
+          model="fieldChooser.phoneNumber" />
+        &nbsp;&nbsp;Phone Number
+      </label>
+      <label>
+        <Control.checkbox
+          model="fieldChooser.email" />
+        &nbsp;&nbsp;Email
+      </label>
+      <label>
+        <Control.checkbox
+          model="fieldChooser.address1" />
+        &nbsp;&nbsp;Address
+      </label>
+      <label>
+        <Control.checkbox
+          model="fieldChooser.comments" />
+        &nbsp;&nbsp;Comments
+      </label>
+    </div>
+  </Popover>
+)
+
 
 class ContactDetail extends React.Component {
 
@@ -26,6 +72,7 @@ class ContactDetail extends React.Component {
       )
     } else {
       const contact = this.props.data.contact
+      const fieldChooser = this.props.fieldChooser
       return (
         <div
           className="col-lg-6 col-lg-offset-1 col-md-6 col-md-offset-1 col-sm-6
@@ -33,6 +80,17 @@ class ContactDetail extends React.Component {
         >
           <div className="page-header">
             <h3><strong>Contact Info</strong></h3>
+            <span>
+              <OverlayTrigger
+                trigger="click"
+                placement="right"
+                overlay={popoverRight}
+              >
+                <a
+                  className="glyphicon glyphicon-check field-toggle"
+                />
+              </OverlayTrigger>
+            </span>
           </div>
           <div>
             <h1>{contact.firstName} {contact.lastName}</h1>
@@ -40,7 +98,7 @@ class ContactDetail extends React.Component {
           <div>
             <table className="table table-hover table-striped">
               <tbody>
-                <tr>
+                <tr className={ !fieldChooser.company ? 'hidden' : false }>
                   <td className="text-right">
                     <strong>Company</strong>
                   </td>
@@ -48,7 +106,7 @@ class ContactDetail extends React.Component {
                     {contact.company}
                   </td>
                 </tr>
-                <tr>
+                <tr className={ !fieldChooser.jobTitle ? 'hidden' : false }>
                   <td className="text-right">
                     <strong>Job Title:</strong>
                   </td>
@@ -56,7 +114,7 @@ class ContactDetail extends React.Component {
                     {contact.jobTitle}
                   </td>
                 </tr>
-                <tr>
+                <tr className={ !fieldChooser.phoneNumber ? 'hidden' : false }>
                   <td className="text-right">
                     <strong>Phone Number:</strong>
                   </td>
@@ -64,7 +122,7 @@ class ContactDetail extends React.Component {
                     {contact.phoneNumber}
                   </td>
                 </tr>
-                <tr>
+                <tr className={ !fieldChooser.email ? 'hidden' : false }>
                   <td className="text-right">
                     <strong>Email:</strong>
                   </td>
@@ -72,7 +130,7 @@ class ContactDetail extends React.Component {
                     {contact.email}
                   </td>
                 </tr>
-                <tr>
+                <tr className={ !fieldChooser.address1 ? 'hidden' : false }>
                   <td className="text-right">
                     <strong>Address:</strong>
                   </td>
@@ -84,7 +142,7 @@ class ContactDetail extends React.Component {
                     {contact.zipcode}
                   </td>
                 </tr>
-                <tr>
+                <tr className={ !fieldChooser.comments ? 'hidden' : false }>
                   <td className="text-right">
                     <strong>Comments:</strong>
                   </td>
@@ -129,14 +187,15 @@ query ContactDetailQuery($id: ID!) {
 }
 `
 const ContactDetailWithData = graphql(CONTACT_DETAIL_QUERY, {
-  options: ({ id }) => ({
+  options: ({ id, fieldChooser }) => ({
     // forceFetch: true,
     variables: { id },
   }),
 })(ContactDetail)
 
-const mapStateToProps = ({ activeItem }) => ({
+const mapStateToProps = ({ activeItem, fieldChooser }) => ({
   id: activeItem,
+  fieldChooser,
 })
 
 const ContactDetailContainer = connect(mapStateToProps)(ContactDetailWithData)

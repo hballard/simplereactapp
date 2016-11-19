@@ -36,12 +36,22 @@ const client = new ApolloClient({
   dataIdFromObject: o => o.id,
 })
 
+const fieldChooserInitState = {
+  jobTitle: true,
+  company: true,
+  phoneNumber: true,
+  email: true,
+  address1: true,
+  comments: true,
+}
+
 const appStore = combineReducers({
   activeItem,
   addUserModalState,
   editUserModalState,
   contactListEditState,
   deleteConfirmationState,
+  fieldChooser: modelReducer('fieldChooser', fieldChooserInitState),
   addUser: modelReducer('addUser'),
   addUserForm: formReducer('addUser'),
   editUser: modelReducer('editUser'),
@@ -55,13 +65,14 @@ const store = createStore(
   {},
   compose(
     applyMiddleware(thunk, client.middleware()),
-    window.devToolsExtension ? window.devToolsExtension() : f => f
-  )
+    window.devToolsExtension ? window.devToolsExtension() : f => f,
+  ),
 )
 
 ReactDOM.render(
   <ApolloProvider store={store} client={client}>
     <AppWithDataContainer />
   </ApolloProvider>,
-  document.getElementById('app'))
+  document.getElementById('app'),
+)
 

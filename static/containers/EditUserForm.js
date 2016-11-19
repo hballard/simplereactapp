@@ -34,7 +34,20 @@ const EditUserForm = (props) => {
 }
 
 EditUserForm.propTypes = {
-  editUser: React.PropTypes.object.isRequired,
+  editUser: React.PropTypes.shape({
+    id: React.PropTypes.string,
+    firstName: React.PropTypes.string,
+    lastName: React.PropTypes.string,
+    jobTitle: React.PropTypes.string,
+    company: React.PropTypes.string,
+    phoneNumber: React.PropTypes.string,
+    email: React.PropTypes.string,
+    city: React.PropTypes.string,
+    state: React.PropTypes.string,
+    zipcode: React.PropTypes.string,
+    comments: React.PropTypes.string,
+    address1: React.PropTypes.string,
+  }).isRequired,
   toggleEditForm: React.PropTypes.func.isRequired,
   submitForm: React.PropTypes.func.isRequired,
   editUserModalState: React.PropTypes.bool.isRequired,
@@ -72,7 +85,7 @@ const EditUserFormWithData = graphql(EDIT_CONTACT, {
           ...editUser,
         },
       },
-    }).then(toggleEditForm()),
+    }),
   }),
 })(EditUserForm)
 

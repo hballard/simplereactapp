@@ -1,19 +1,19 @@
 import React from 'react'
-import { Button } from 'react-bootstrap'
 import sortBy from 'lodash/sortBy'
 import { connect } from 'react-redux'
 import { graphql } from 'react-apollo'
 import gql from 'graphql-tag'
+import { Button } from 'react-bootstrap'
 import LoadingScreen from '../components/LoadingScreen'
-import {
-  toggleAddUserFormState,
-  initActiveItem,
-} from '../actions'
 import ContactDetailContainer from './ContactDetail'
 import ContactListContainer from './ContactList'
 import AddUserFormContainer from './AddUserForm'
 import EditUserFormContainer from './EditUserForm'
 import DeleteConfirmationContainer from './DeleteConfirmation'
+import {
+  toggleAddUserFormState,
+  initActiveItem,
+} from '../actions'
 
 class App extends React.Component {
 
@@ -77,7 +77,7 @@ query ListOfContacts {
 }
 `
 const AppWithData = graphql(LIST_OF_CONTACTS, {
-  options: { pollInterval: 20000 },
+  options: { pollInterval: 30000 },
   props: ({ data: { allContacts, loading } }) => ({
     contacts: allContacts,
     loading,

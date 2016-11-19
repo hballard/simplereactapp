@@ -11,6 +11,12 @@ export const editUserModalState = (state = false, action) => {
   switch (action.type) {
     case 'EDIT_CONTACT_TOGGLE':
       return !state
+    case 'APOLLO_MUTATION_RESULT':
+      if (action.result.data.editContact) {
+        return !state
+      } else {
+        return state
+      }
     default:
       return state
   }

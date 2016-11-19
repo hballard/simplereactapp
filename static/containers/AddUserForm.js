@@ -38,7 +38,20 @@ const AddUserForm = (props) => {
 }
 
 AddUserForm.propTypes = {
-  addUser: React.PropTypes.object.isRequired,
+  addUser: React.PropTypes.shape({
+    id: React.PropTypes.string,
+    firstName: React.PropTypes.string,
+    lastName: React.PropTypes.string,
+    jobTitle: React.PropTypes.string,
+    company: React.PropTypes.string,
+    phoneNumber: React.PropTypes.string,
+    email: React.PropTypes.string,
+    city: React.PropTypes.string,
+    state: React.PropTypes.string,
+    zipcode: React.PropTypes.string,
+    comments: React.PropTypes.string,
+    address1: React.PropTypes.string,
+  }).isRequired,
   addUserModalState: React.PropTypes.bool.isRequired,
   submitForm: React.PropTypes.func.isRequired,
   toggleAddForm: React.PropTypes.func.isRequired,

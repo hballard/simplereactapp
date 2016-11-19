@@ -24,36 +24,41 @@ const ContactList = ({
     <div className="page-header">
       <h3><strong>Contacts</strong></h3>
     </div>
-    <ul className="list-unstyled">
+    <div className="list-group">
       {contacts.map(element => (
         <div
-          className="li-container"
+          id="contact-list"
           key={element.node.id}
         >
-          <li
-            className={element.node.id === activeItem ? 'active-item' : null}
+          <a
+            className={element.node.id === activeItem ?
+              'list-group-item active' : 'list-group-item'}
             onClick={() => selectContact(element)}
             onDoubleClick={() => toggleEditBar()}
             key={element.node.id}
           >
             {element.node.lastName}, {element.node.firstName}
-          </li>
-          {element.node.id === activeItem && contactListEditState ? (
-            <span className="contact-list-edit">
-              <i
-                className="glyphicon glyphicon-trash"
-                onClick={() => toggleDeleteConfBox()}
-              />
-              <i
-                className="glyphicon glyphicon-edit"
-                onClick={() => toggleEditForm()}
-              />
-            </span>
-          ) : null}
+          </a>
+          <span
+            className={
+              element.node.id === activeItem && contactListEditState ?
+              'contact-list-edit' :
+              'contact-list-edit hidden'
+            }
+          >
+            <i
+              className="glyphicon glyphicon-trash"
+              onClick={() => toggleDeleteConfBox()}
+            />
+            <i
+              className="glyphicon glyphicon-edit"
+              onClick={() => toggleEditForm()}
+            />
+          </span>
         </div>
-        )
+      )
       )}
-    </ul>
+    </div>
   </div>
 )
 

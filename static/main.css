@@ -16,11 +16,64 @@ body {
 #list-container {
   padding-left: 1em;
   text-align: center;
-  /*height: 30em;*/
+  height: 30em;
+}
+
+div.page-header {
+  vertical-align: middle;
+}
+
+div.page-header h3 {
+  display: initial;
+  padding-right: .5em;
+  vertical-align: inherit;
+}
+
+div.page-header span {
+  vertical-align: inherit;
+}
+
+#list-container > div.list-group {
+  overflow: auto;
+  max-height: 24em;
+}
+
+div#contact-list .list-group-item {
+  position: relative;
+  display: inline-block;
+  padding: 4px 25px;
+  background-color: #fff;
+  border: none;
+}
+
+div#contact-list .list-group-item.active  {
+  z-index: 2;
+  color: #fff;
+  background-color: #337ab7;
+  border-color: #337ab7;
+}
+
+div#contact-list .list-group-item.active:hover  {
+  z-index: 2;
+  color: #fff;
+  background-color: #337ab7;
+  border-color: #337ab7;
+}
+
+div#contact-list .list-group-item:hover {
+  color: #555;
+  text-decoration: none;
+  background-color: #f5f5f5;
+}
+
+.list-group-item:first-child {
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
 }
 
 .list-detail-container {
   height: 29em;
+  margin-bottom: 2em;
 }
 
 .detail-container {
@@ -45,7 +98,6 @@ body {
   color: #215079;
 }
 
-
 li {
   display: inline-block;
   padding-right: 15px;
@@ -57,10 +109,6 @@ li {
   padding-top: 13em;
 }
 
-#contact-detail-container {
-  /*max-height: 30px;*/
-}
-
 .list-unstyled {
   overflow-y: auto;
   max-height: 20em;
@@ -68,13 +116,6 @@ li {
 
 .vertical-align {
   float: right;
-}
-
-.active-item {
-  color: white;
-  background: #337ab7;
-  padding-right: 15px;
-  padding-left: 15px;
 }
 
 button.add-contact.btn {
@@ -91,16 +132,17 @@ button.add-contact.btn {
   /*background: #0b97c4;*/
 }
 
-/*.btn-primary.focus {*/
-  /*background-color: #337ab7*/
-/*}*/
-
-/*.btn-primary:focus {*/
-  /*background-color: #337ab7*/
-/*}*/
-
 .glyphicon-plus {
   font-size: 1.5em;
+}
+
+.glyphicon-check {
+  font-size: 1.2em;
+}
+
+a.field-toggle {
+  padding-right: .5em;
+  vertical-align: text-bottom;
 }
 
 hr.contact-app {
@@ -110,4 +152,8 @@ hr.contact-app {
 
 span.contact-list-edit {
   transition: all 1s ease-in-out;
+}
+
+.hidden {
+  display: none;
 }
