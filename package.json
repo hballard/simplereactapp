@@ -24,14 +24,15 @@
     "eslint-plugin-jsx-a11y": "^2.2.3",
     "eslint-plugin-react": "^6.4.1",
     "parallelshell": "^2.0.0",
-    "webpack": "^1.13.0"
+    "webpack": "^1.13.0",
+    "webpack-dev-server": "^1.16.2"
   },
   "dependencies": {
-    "apollo-client": "^0.5.4",
+    "apollo-client": "^0.4.21",
     "graphql-tag": "^0.1.14",
     "lodash": "^4.16.4",
     "react": "^15.1.0",
-    "react-apollo": "^0.6.0",
+    "react-apollo": "^0.5.11",
     "react-bootstrap": "^0.30.5",
     "react-dom": "^15.0.2",
     "react-redux": "^4.4.5",

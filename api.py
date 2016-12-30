@@ -134,16 +134,17 @@ class Mutations(graphene.ObjectType):
     edit_contact = EditContact.Field()
     delete_contact = DeleteContact.Field()
 
+
 schema = graphene.Schema(query=Query, mutation=Mutations)
 
 app.add_url_rule(
-        '/graphql',
-        view_func=GraphQLView.as_view(
-            'graphql',
-            schema=schema,
-            graphiql=True
-            )
-        )
+    '/graphql',
+    view_func=GraphQLView.as_view(
+        'graphql',
+        schema=schema,
+        graphiql=True
+    )
+)
 
 
 def add_cors_header(response):

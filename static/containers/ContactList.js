@@ -87,7 +87,7 @@ const mapDispatchToProps = dispatch => ({
 
 const ContactListContainer = connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(ContactList)
 
 export default ContactListContainer

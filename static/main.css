@@ -7,7 +7,7 @@ body {
 
 #main-container {
   margin: 4em auto;
-  max-width: 50em;
+  max-width: 55em;
   border: 5px solid #ccc;
   padding: 1em 1em;
   background: white;
@@ -16,7 +16,7 @@ body {
 #list-container {
   padding-left: 1em;
   text-align: center;
-  height: 30em;
+  height: 25em;
 }
 
 div.page-header {

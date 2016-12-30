@@ -1,8 +1,8 @@
 {
-"presets": [
-  "stage-2",
-  "es2015",
-  "react",
-  "react-hmre"
-]
+    "presets": [
+        "stage-2",
+        "es2015",
+        "react",
+        "react-hmre"
+    ]
 }

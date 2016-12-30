@@ -15,37 +15,49 @@ const popoverRight = (
     id="popover-positioned-right"
     title="Select Fields to Display"
   >
-    <div className="list-group">
-      <label>
-        <Control.checkbox
-          model="fieldChooser.jobTitle" />
-        &nbsp;&nbsp;Job Title
-      </label>
-      <label>
-        <Control.checkbox
-          model="fieldChooser.company" />
-        &nbsp;&nbsp;Company
-      </label>
-      <label>
-        <Control.checkbox
-          model="fieldChooser.phoneNumber" />
-        &nbsp;&nbsp;Phone Number
-      </label>
-      <label>
-        <Control.checkbox
-          model="fieldChooser.email" />
-        &nbsp;&nbsp;Email
-      </label>
-      <label>
-        <Control.checkbox
-          model="fieldChooser.address1" />
-        &nbsp;&nbsp;Address
-      </label>
-      <label>
-        <Control.checkbox
-          model="fieldChooser.comments" />
-        &nbsp;&nbsp;Comments
-      </label>
+    <div>
+      <div>
+        <label>
+          <Control.checkbox
+            model="fieldChooser.jobTitle" />
+            &nbsp;&nbsp;Job Title
+        </label>
+      </div>
+      <div>
+        <label>
+          <Control.checkbox
+            model="fieldChooser.company" />
+            &nbsp;&nbsp;Company
+        </label>
+      </div>
+      <div>
+        <label>
+          <Control.checkbox
+            model="fieldChooser.phoneNumber" />
+            &nbsp;&nbsp;Phone Number
+        </label>
+      </div>
+      <div>
+        <label>
+          <Control.checkbox
+            model="fieldChooser.email" />
+            &nbsp;&nbsp;Email
+        </label>
+      </div>
+      <div>
+        <label>
+          <Control.checkbox
+            model="fieldChooser.address1" />
+            &nbsp;&nbsp;Address
+        </label>
+      </div>
+      <div>
+        <label>
+          <Control.checkbox
+            model="fieldChooser.comments" />
+            &nbsp;&nbsp;Comments
+        </label>
+      </div>
     </div>
   </Popover>
 )
@@ -98,7 +110,8 @@ class ContactDetail extends React.Component {
           <div>
             <table className="table table-hover table-striped">
               <tbody>
-                <tr className={ !fieldChooser.company ? 'hidden' : false }>
+                <tr className={ !fieldChooser.company ||
+                  !contact.company ? 'hidden' : false }>
                   <td className="text-right">
                     <strong>Company</strong>
                   </td>
@@ -106,7 +119,8 @@ class ContactDetail extends React.Component {
                     {contact.company}
                   </td>
                 </tr>
-                <tr className={ !fieldChooser.jobTitle ? 'hidden' : false }>
+                <tr className={ !fieldChooser.jobTitle ||
+                  !contact.jobTitle ? 'hidden' : false }>
                   <td className="text-right">
                     <strong>Job Title:</strong>
                   </td>
@@ -114,7 +128,8 @@ class ContactDetail extends React.Component {
                     {contact.jobTitle}
                   </td>
                 </tr>
-                <tr className={ !fieldChooser.phoneNumber ? 'hidden' : false }>
+                <tr className={ !fieldChooser.phoneNumber ||
+                  !contact.phoneNumber ? 'hidden' : false }>
                   <td className="text-right">
                     <strong>Phone Number:</strong>
                   </td>
@@ -122,7 +137,8 @@ class ContactDetail extends React.Component {
                     {contact.phoneNumber}
                   </td>
                 </tr>
-                <tr className={ !fieldChooser.email ? 'hidden' : false }>
+                <tr className={ !fieldChooser.email ||
+                  !contact.email ? 'hidden' : false }>
                   <td className="text-right">
                     <strong>Email:</strong>
                   </td>
@@ -130,7 +146,9 @@ class ContactDetail extends React.Component {
                     {contact.email}
                   </td>
                 </tr>
-                <tr className={ !fieldChooser.address1 ? 'hidden' : false }>
+                <tr className={ !fieldChooser.address1 ||
+                  (!contact.address1 && !contact.city && !contact.zipcode &&
+                  ! contact.state) ? 'hidden' : false }>
                   <td className="text-right">
                     <strong>Address:</strong>
                   </td>
@@ -142,7 +160,8 @@ class ContactDetail extends React.Component {
                     {contact.zipcode}
                   </td>
                 </tr>
-                <tr className={ !fieldChooser.comments ? 'hidden' : false }>
+                <tr className={ !fieldChooser.comments ||
+                  !contact.comments ? 'hidden' : false }>
                   <td className="text-right">
                     <strong>Comments:</strong>
                   </td>
