@@ -6,7 +6,7 @@
     "start": "parallelshell 'npm run watch' 'npm run api'",
     "watch": "webpack-dev-server --progress --inline --hot --content-base static/",
     "build": "webpack -p",
-    "api": "source ~/.virtualenvs/simplereactapp/bin/activate && python api.py"
+    "api": "pipenv run python api.py"
   },
   "author": "",
   "license": "ISC",
@@ -23,7 +23,7 @@
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^2.2.3",
     "eslint-plugin-react": "^6.4.1",
-    "parallelshell": "^2.0.0",
+    "parallelshell": "^3.0.1",
     "webpack": "^1.13.0",
     "webpack-dev-server": "^1.16.2"
   },

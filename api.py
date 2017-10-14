@@ -155,6 +155,7 @@ def add_cors_header(response):
             DELETE, OPTIONS'
     return response
 
+
 app.after_request(add_cors_header)
 
 
